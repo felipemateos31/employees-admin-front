@@ -1,0 +1,158 @@
+<div class="employee-create-and-update">
+  <div class="page-title">
+    <i class="page-btn-back fas fa-chevron-left" (click)="onBackClick()"></i>
+    <span class="btn-text">
+      {{ id.value ? "Editar " : "Nuevo " }} empleado
+    </span>
+  </div>
+  <form [formGroup]="employeeForm" (ngSubmit)="onEmployeeFormSubmit()">
+    <div class="row no-gutters mt-3">
+      <div class="col-12 col-md-9 col-lg-9 col-xl-9">
+        <div class="card">
+          <div class="card-title">
+            Datos personales
+          </div>
+          <div class="row">
+            <div class="col-4 mb-3">
+              <label for="firstName" class="form-label">Nombre</label>
+              <input type="text" class="form-control" formControlName="firstName" id="firstName">
+              <div class="errors" *ngIf="firstName.invalid && firstName.touched">
+                <small *ngIf="firstName.errors.required" class="form-text-invalid">
+                  Campo requerido.
+                </small>
+              </div>
+            </div>
+            <div class="col-4 mb-3">
+              <label for="lastName" class="form-label">Apellido Paterno</label>
+              <input type="text" class="form-control" formControlName="lastName" id="lastName">
+              <div class="errors" *ngIf="lastName.invalid && lastName.touched">
+                <small *ngIf="lastName.errors.required" class="form-text-invalid">
+                  Campo requerido.
+                </small>
+              </div>
+            </div>
+            <div class="col-4 mb-3">
+              <label for="middleName" class="form-label">Apellido Materno</label>
+              <input type="text" class="form-control" formControlName="middleName" id="middleName">
+              <div class="errors" *ngIf="middleName.invalid && middleName.touched">
+                <small *ngIf="middleName.errors.required" class="form-text-invalid">
+                  Campo requerido.
+                </small>
+              </div>
+            </div>
+            <div class="col-4 mb-3">
+              <label for="birthDate" class="form-label">Fecha de nacimiento</label>
+              <input type="date" class="form-control" formControlName="birthDate" id="birthDate">
+              <div class="errors" *ngIf="birthDate.invalid && birthDate.touched">
+                <small *ngIf="birthDate.errors.required" class="form-text-invalid">
+                  Campo requerido.
+                </small>
+              </div>
+            </div>
+            <div class="col-4 mb-3">
+              <label for="age" class="form-label">Edad</label>
+              <input type="text" class="form-control" formControlName="age" id="age">
+              <div class="errors" *ngIf="age.invalid && age.touched">
+                <small *ngIf="age.errors.required" class="form-text-invalid">
+                  Campo requerido.
+                </small>
+              </div>
+            </div>
+            <div class="col-4 mb-3">
+              <label for="maritalStatus" class="form-label">Estado civil</label>
+              <input type="text" class="form-control" formControlName="maritalStatus" id="maritalStatus">
+              <div class="errors" *ngIf="maritalStatus.invalid && maritalStatus.touched">
+                <small *ngIf="maritalStatus.errors.required" class="form-text-invalid">
+                  Campo requerido.
+                </small>
+              </div>
+            </div>
+            <div class="col-4 mb-3">
+              <label for="rfc" class="form-label">RFC</label>
+              <input type="text" class="form-control" formControlName="rfc" id="rfc" maxlength="13">
+              <div class="errors" *ngIf="rfc.invalid && rfc.touched">
+                <small *ngIf="rfc.errors.required" class="form-text-invalid">
+                  Campo requerido.
+                </small>
+                <small *ngIf="!rfc.errors.invalidPattern && rfc.errors.minlength" class="form-text-invalid">
+                  Longitud Invalida mínimo {{ rfc.errors.minlength.requiredLength }} caracteres.
+                </small>
+                <small *ngIf="!rfc.errors.invalidPattern && rfc.errors.maxlength " class="form-text-invalid">
+                  Longitud Invalida máximo {{ rfc.errors.maxlength.requiredLength }} caracteres.
+                </small>
+              </div>
+            </div>
+            <div class="col-4 mb-3">
+              <label for="position" class="form-label">Puesto</label>
+              <input type="text" class="form-control" formControlName="position" id="position">
+              <div class="errors" *ngIf="position.invalid && position.touched">
+                <small *ngIf="position.errors.required" class="form-text-invalid">
+                  Campo requerido.
+                </small>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="card mt-3">
+          <div class="row">
+            <div class="card-title">
+              Datos de contacto
+            </div>
+            <div class="col-12 mb-3">
+              <label for="address" class="form-label">Dirección</label>
+              <input type="text" class="form-control " formControlName="address" id="address">
+              <div class="errors" *ngIf="address.invalid && address.touched">
+                <small *ngIf="address.errors.required" class="form-text-invalid">
+                  Campo requerido.
+                </small>
+              </div>
+            </div>
+            <div class="col-6 mb-3">
+              <label for="email" class="form-label">Correo electronico</label>
+              <input type="email" class="form-control" formControlName="email" id="email">
+              <div class="errors" *ngIf="email.invalid && email.touched">
+                <small *ngIf="email.errors.required" class="form-text-invalid">
+                  Campo requerido.
+                </small>
+              </div>
+            </div>
+            <div class="col-6 mb-3">
+              <label for="phone" class="form-label">Telefono</label>
+              <input type="text" class="form-control" formControlName="phone" id="phone" maxlength="10">
+              <div class="errors" *ngIf="phone.invalid && phone.touched">
+                <small *ngIf="phone.errors.required" class="form-text-invalid">
+                  Campo requerido.
+                </small>
+                <small *ngIf="!phone.errors.invalidPattern && phone.errors.minlength" class="form-text-invalid">
+                  Longitud Invalida mínimo {{ phone.errors.minlength.requiredLength }} caracteres.
+                </small>
+                <small *ngIf="!phone.errors.invalidPattern && phone.errors.maxlength " class="form-text-invalid">
+                  Longitud Invalida máximo {{ phone.errors.maxlength.requiredLength }} caracteres.
+                </small>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+      <div class="col-12 col-md-3 col-lg-3 col-xl-3 card-button">
+        <div class="card">
+          <div class="row">
+            <div class="d-grid col-12">
+              <button type="submit" class="btn btn-lg btn-custom">
+                <span class="btn-text">{{id.value ? "Actualizar" : "Guardar"}}</span>
+              </button>
+            </div>
+
+            <div class="d-grid col-12 mt-3">
+              <button type="button" class="btn btn-lg btn-custom-orange" (click)="onBackClick()">
+                Cancelar
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </form>
+</div>
