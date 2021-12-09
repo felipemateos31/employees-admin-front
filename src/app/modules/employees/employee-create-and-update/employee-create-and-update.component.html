@@ -2,7 +2,7 @@
   <div class="page-title">
     <i class="page-btn-back fas fa-chevron-left" (click)="onBackClick()"></i>
     <span class="btn-text">
-      {{ id.value ? "Editar " : "Nuevo " }} empleado
+      {{ id.value ? "Editar " : "Registrar " }} empleado
     </span>
   </div>
   <form [formGroup]="employeeForm" (ngSubmit)="onEmployeeFormSubmit()">
@@ -59,6 +59,15 @@
               </div>
             </div>
             <div class="col-4 mb-3">
+              <label for="gender" class="form-label">Genero</label>
+              <input type="text" class="form-control" formControlName="gender" id="gender">
+              <div class="errors" *ngIf="gender.invalid && gender.touched">
+                <small *ngIf="gender.errors.required" class="form-text-invalid">
+                  Campo requerido.
+                </small>
+              </div>
+            </div>
+            <div class="col-4 mb-3">
               <label for="maritalStatus" class="form-label">Estado civil</label>
               <input type="text" class="form-control" formControlName="maritalStatus" id="maritalStatus">
               <div class="errors" *ngIf="maritalStatus.invalid && maritalStatus.touched">
@@ -74,10 +83,10 @@
                 <small *ngIf="rfc.errors.required" class="form-text-invalid">
                   Campo requerido.
                 </small>
-                <small *ngIf="!rfc.errors.invalidPattern && rfc.errors.minlength" class="form-text-invalid">
+                <small *ngIf="!rfc.errors.pattern && rfc.errors.minlength" class="form-text-invalid">
                   Longitud Invalida mínimo {{ rfc.errors.minlength.requiredLength }} caracteres.
                 </small>
-                <small *ngIf="!rfc.errors.invalidPattern && rfc.errors.maxlength " class="form-text-invalid">
+                <small *ngIf="!rfc.errors.pattern && rfc.errors.maxlength " class="form-text-invalid">
                   Longitud Invalida máximo {{ rfc.errors.maxlength.requiredLength }} caracteres.
                 </small>
               </div>
@@ -90,6 +99,19 @@
                   Campo requerido.
                 </small>
               </div>
+            </div>
+            <div class="col-4 mb-3">
+              <label for="startDate" class="form-label">Fecha Alta</label>
+              <input type="date" class="form-control" formControlName="startDate" id="startDate">
+              <div class="errors" *ngIf="startDate.invalid && startDate.touched">
+                <small *ngIf="startDate.errors.required" class="form-text-invalid">
+                  Campo requerido.
+                </small>
+              </div>
+            </div>
+            <div class="col-4 mb-3">
+              <label for="endDate" class="form-label">Fecha Baja</label>
+              <input type="date" class="form-control" formControlName="endDate" id="endDate">
             </div>
           </div>
         </div>
@@ -114,6 +136,9 @@
                 <small *ngIf="email.errors.required" class="form-text-invalid">
                   Campo requerido.
                 </small>
+                <small *ngIf="!email.errors.required && email.errors.pattern" class="form-text-invalid">
+                  Correo electronico no válido.
+                </small>
               </div>
             </div>
             <div class="col-6 mb-3">
@@ -123,12 +148,16 @@
                 <small *ngIf="phone.errors.required" class="form-text-invalid">
                   Campo requerido.
                 </small>
-                <small *ngIf="!phone.errors.invalidPattern && phone.errors.minlength" class="form-text-invalid">
+                <small *ngIf="!phone.errors.required && phone.errors.pattern" class="form-text-invalid">
+                  Solo se permiten caracteres numéricos.
+                </small>
+                <small *ngIf="!phone.errors.pattern && phone.errors.minlength" class="form-text-invalid">
                   Longitud Invalida mínimo {{ phone.errors.minlength.requiredLength }} caracteres.
                 </small>
-                <small *ngIf="!phone.errors.invalidPattern && phone.errors.maxlength " class="form-text-invalid">
+                <small *ngIf="!phone.errors.pattern && phone.errors.maxlength " class="form-text-invalid">
                   Longitud Invalida máximo {{ phone.errors.maxlength.requiredLength }} caracteres.
                 </small>
+
               </div>
             </div>
 
@@ -140,7 +169,7 @@
           <div class="row">
             <div class="d-grid col-12">
               <button type="submit" class="btn btn-lg btn-custom">
-                <span class="btn-text">{{id.value ? "Actualizar" : "Guardar"}}</span>
+                <span class="btn-text">{{id.value ? "Actualizar" : "Registrar"}}</span>
               </button>
             </div>
 

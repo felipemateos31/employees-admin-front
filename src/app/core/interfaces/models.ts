@@ -12,6 +12,8 @@ export interface IEmployee {
   email: string;
   phone: string;
   position: string;
+  startDate:Date | string;
+  endDate:Date | string;
   creatAt: Date;
   updateAt: Date;
   deleteAt: Date;

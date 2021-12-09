@@ -30,6 +30,9 @@ export class EmployeeCreateAndUpdateComponent implements OnInit {
   get email(): AbstractControl { return this.employeeForm.get('email'); }
   get phone(): AbstractControl { return this.employeeForm.get('phone'); }
   get position(): AbstractControl { return this.employeeForm.get('position'); }
+  get startDate(): AbstractControl { return this.employeeForm.get('startDate'); }
+  get endDate(): AbstractControl { return this.employeeForm.get('endDate'); }
+
 
   constructor(
     private employeeService: EmployeeService,
@@ -49,9 +52,11 @@ export class EmployeeCreateAndUpdateComponent implements OnInit {
       maritalStatus: ['', [Validators.required]],
       rfc: ['', [Validators.required, Validators.maxLength(13), Validators.minLength(10)]],
       address: ['', [Validators.required]],
-      email: ['', [Validators.required]],
-      phone: ['', [Validators.required, Validators.maxLength(10), Validators.minLength(10)]],
+      email: ['', [Validators.required, Validators.pattern(/[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,64}/)]],
+      phone: ['', [Validators.required, Validators.maxLength(10), Validators.minLength(10), Validators.pattern(/^[0-9]+$/)]],
       position: ['', [Validators.required]],
+      startDate:['',[Validators.required]],
+      endDate:[null],
     });
 
     this.activatedRoute.paramMap.subscribe((paramMap: ParamMap) => {
@@ -61,9 +66,10 @@ export class EmployeeCreateAndUpdateComponent implements OnInit {
           if (employeeResponse) {
             this.employee = employeeResponse;
             this.employee.birthDate = moment(employeeResponse.birthDate).format('YYYY-MM-DD');
+            this.employee.startDate = moment(employeeResponse.startDate).format('YYYY-MM-DD');
+            this.employee.endDate = moment(employeeResponse.endDate).format('YYYY-MM-DD');
+
             this.employeeForm.patchValue(this.employee);
-
-
             this.employeeForm.disable();
 
             this.email.enable();
@@ -71,12 +77,13 @@ export class EmployeeCreateAndUpdateComponent implements OnInit {
             this.position.enable();
             this.maritalStatus.enable();
             this.address.enable();
+            this.endDate.enable();
 
           } else {
             console.error("Employee not found")
           }
         }, (error: HttpErrorResponse) => {
-          console.error(HttpErrorResponse);
+          alert(error);
         });
       }
     });
@@ -96,6 +103,8 @@ export class EmployeeCreateAndUpdateComponent implements OnInit {
   onEmployeeFormSubmit(): void {
     if (!this.employeeForm.valid) {
       Utilities.touchAllControls(this.employeeForm);
+      console.log(this.employeeForm);
+      alert("Los datos no son del todo correctos");
       return;
     }
     if (this.id.value) {
@@ -107,19 +116,19 @@ export class EmployeeCreateAndUpdateComponent implements OnInit {
 
   createEmployee(): void {
     this.employeeService.createEmployee(this.employeeForm.getRawValue()).subscribe((employeeResponse: IEmployee) => {
-
+      alert("Usario registrado correctamente");
       this.onBackClick();
     }, (error: HttpErrorResponse) => {
-
+      alert(error);
     });
   }
 
   updateEmployee(): void {
     this.employeeService.updateEmployee(this.employeeForm.getRawValue()).subscribe((employeeResponse: IEmployee) => {
-
+      alert("Usario actualizado correctamente");
       this.onBackClick();
     }, (error: HttpErrorResponse) => {
-
+      alert(error);
     });
 
   }

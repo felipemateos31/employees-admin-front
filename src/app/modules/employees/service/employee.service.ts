@@ -34,9 +34,15 @@ export class EmployeeService {
     return this.httpClient.delete(path).pipe(share());
   }
 
-  getEmployees(): Observable<any> {
+  getEmployees(params?): Observable<any> {
+    if (params) {
+      Object.keys(params).forEach(
+          (key) => params[key] === undefined && delete params[key]
+      );
+  }
+  console.log(params);
     const path = this.getPath('employees')
-    return this.httpClient.get(path).pipe(share());
+    return this.httpClient.get(path,{ params }).pipe(share());
   }
 
   getPath(path: string): string {
